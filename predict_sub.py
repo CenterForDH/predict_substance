@@ -48,11 +48,15 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 
 @st.cache_data
 
-def model_file():
-    mfile = 'https://github.com/CenterForDH/predict_substance/blob/main/predict_substance_model.pkl'
-    model = pickle.load(open(mfile, 'rb'))
+import requests
 
+@st.cache_data
+def model_file():
+    mfile_url = 'https://raw.githubusercontent.com/CenterForDH/predict_substance/main/predict_substance_model.pkl'
+    response = requests.get(mfile_url)
+    model = pickle.loads(response.content)
     return model
+
 
 
 
