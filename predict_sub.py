@@ -45,8 +45,6 @@ text-align: center;
 
 st.markdown(str(footerText), unsafe_allow_html=True)
 
-import os
-
 
 @st.cache_data
 
@@ -77,8 +75,6 @@ def set_bmi(BMI):
 
 
 def input_values():
-    existance = os.path.exists('/mount/src/predict_substance/predict_substance_model.pkl')
-    exist = st.radio(print(existance))
     
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
