@@ -1,3 +1,3 @@
-# Machine learning-based prediction of suicidality in adolescents with allergic rhinitis
+# Machine learning-based prediction of Substance Usage in adolescents
 
-https://predictsuicidality.streamlit.app/
+[https://predictsubstance.streamlit.app/]
