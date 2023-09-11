@@ -1,6 +1,7 @@
 import pickle
 import streamlit as st
 import time
+import requests
 
 #st.set_page_config(layout="wide")
 
@@ -46,9 +47,6 @@ text-align: center;
 st.markdown(str(footerText), unsafe_allow_html=True)
 
 
-@st.cache_data
-
-import requests
 
 @st.cache_data
 def model_file():
