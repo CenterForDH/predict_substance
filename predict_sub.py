@@ -46,7 +46,7 @@ text-align: center;
 st.markdown(str(footerText), unsafe_allow_html=True)
 
 import os
-print(os.path.exists('/mount/src/predict_substance/predict_substance_model.pkl'))
+
 
 @st.cache
 
@@ -77,6 +77,9 @@ def set_bmi(BMI):
 
 
 def input_values():
+    existance = print(os.path.exists('/mount/src/predict_substance/predict_substance_model.pkl'))
+    exist = st.radio(existance)
+    
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
     SEX = SEXDict[SEX]
