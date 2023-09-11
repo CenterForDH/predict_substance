@@ -49,10 +49,9 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 
 def model_file():
     mfile = 'predict_substance_model.pkl'
-    with open(mfile, 'rb') as file:
-        model = pickle.load(file)
-    return model
+    model = pickle.load(open(mfile, 'rb'))
 
+    return model
 
 
 
