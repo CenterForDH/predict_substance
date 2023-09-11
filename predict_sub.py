@@ -48,7 +48,7 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 
 def model_file():
-    mfile = 'predict_substance_model.pkl'
+    mfile = '/mount/src/predict_substance/predict_substance_model.pkl'
     model = pickle.load(open(mfile, 'rb'))
 
     return model
