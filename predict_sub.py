@@ -1,7 +1,6 @@
 import pickle
 import streamlit as st
 import time
-import requests
 
 #st.set_page_config(layout="wide")
 
@@ -46,16 +45,16 @@ text-align: center;
 
 st.markdown(str(footerText), unsafe_allow_html=True)
 
-
-
 @st.cache_data
+#sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile_url = 'https://raw.githubusercontent.com/CenterForDH/predict_substance/main/predict_substance_model.pkl'
-    response = requests.get(mfile_url)
-    model = pickle.loads(response.content)
+    mfile = 'predict_substance_model_V2.pkl'
+    with open(mfile, 'rb') as file:
+        model = pickle.load(file)
     return model
 
-
+# predict_substance_model
+# sub_finalized_model_lgb
 
 
 def prediction(X_test):
@@ -77,7 +76,6 @@ def set_bmi(BMI):
 
 
 def input_values():
-    
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
     SEX = SEXDict[SEX]
@@ -95,6 +93,9 @@ def input_values():
     regionDict = {'Urban':1,'Rural':2}
     region  = regionDict[region]
     
+    household_income  = st.radio('Household income', ('Low','Middle','Upper-middle','High'), horizontal=True)
+    household_incomeDict = {'Low':1,'Middle':2,'Upper-middle':3,'High':4}
+    household_income  = household_incomeDict[household_income]
    
     study    = st.radio('School performance', ('Low', 'Low-middle','Middle','Upper-middle','Upper'), horizontal=True)
     studyDict = {'Low':1, 'Low-middle':2,'Middle':3,'Upper-middle':4,'Upper':5}
@@ -104,8 +105,8 @@ def input_values():
     smokingDict = {'No':0,'Yes':1}
     smoking   = smokingDict[smoking]
     
-    alcoholic_consumption = st.radio('Acohol consumption per month', ('No','1-2','3-5','6-9','< 10'), horizontal=True)
-    alcoholic_consumptionDict = {'No':0,'1-2':1,'3-5':2,'6-9':3,'< 10':4}
+    alcoholic_consumption = st.radio('Acohol consumption Status', ('No','Yes'), horizontal=True)
+    alcoholic_consumptionDict = {'No':0,'Yes':1}
     alcoholic_consumption = alcoholic_consumptionDict[alcoholic_consumption]
     
     stress  = st.radio('Stress status', ('Low','Moderate', 'High','Very much'), horizontal=True)
@@ -137,10 +138,27 @@ def main():
     
     with st.sidebar:
         st.markdown(f'# Probability for substance usage')
-        st.markdown(f'# {result*100:.2f} %')
+        
+        # 확률값 result를 addiction level 수치로 변환합니다.
+        if result*100 < 50:
+            addiction_level = 'Barely'
+        elif result*100 < 75:  # 50% 이상 75% 미만
+            addiction_level = 'Moderately'
+            st.markdown(f'# {result*100:.2f} %')
+
+        elif result*100 < 90:  # 75% 이상 90% 미만
+            addiction_level = 'Considerably'
+            st.markdown(f'# {result*100:.2f} %')
+        elif result*100 <= 100 :  # 90% 이상
+            addiction_level = 'Extremely'
+            print(result*100, )
+            st.markdown(f'# {result*100:.2f} %')
+        
+        st.markdown(f'## {addiction_level}')
 
     now = time.localtime()
     print(time.strftime('%Y-%m-%d %H:%M:%S', now))
+
 
         
 
