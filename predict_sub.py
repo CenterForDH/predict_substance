@@ -1,6 +1,7 @@
 import pickle
 import streamlit as st
 import time
+from pathlib import Path
 
 #st.set_page_config(layout="wide")
 
@@ -48,6 +49,7 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
+    raise Exception(Path(__file__).parents)
     mfile = './predict_substance_model_V2.pkl'
     with open(mfile, 'rb') as file:
         model = pickle.load(file)
