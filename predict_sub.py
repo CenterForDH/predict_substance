@@ -51,7 +51,7 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile = str(Path(__file__).parent) + '/predict_substance_model_V2.pkl'
+    mfile = str(Path(__file__).parent) + '/predict_substance_model_V3.pkl'
     with open(mfile, 'rb') as file:
         model = pickle.load(file)
     return model
@@ -142,7 +142,6 @@ def main():
     with st.sidebar:
         st.markdown(f'# Probability for substance usage')
         
-        # 확률값 result를 addiction level 수치로 변환합니다.
         if result*100 < 50:
             addiction_level = 'Barely'
         elif result*100 < 75:  # 50% 이상 75% 미만
