@@ -116,7 +116,7 @@ def input_values():
     stressDict = {'Low':1,'Moderate':2,'High':3,'Very much':4}
     stress = stressDict[stress]
     
-    depression = st.radio('Sadness and despair', ('No','Yes'), horizontal=True)
+    depression = st.radio('Depression', ('No','Yes'), horizontal=True)
     depressionDict = {'No':0,'Yes':1}
     depression = depressionDict[depression]
 
