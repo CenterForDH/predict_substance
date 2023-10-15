@@ -128,8 +128,7 @@ def input_values():
     suicideattemptsDict = {'No':0,'Yes':1}
     suicideattempts = suicideattemptsDict[suicideattempts]
     
-    X_test = [GRADE, SEX, alcoholic_consumption, bmi_2, depression, 
-          region, smoking, stress, study, suicidalthinking, suicideattempts]
+    X_test = [SEX, GRADE, region, bmi_2, household_income, study, stress, alcoholic_consumption, smoking, depression, suicidalthinking, suicideattempts]
 
     result = prediction(X_test)
 
