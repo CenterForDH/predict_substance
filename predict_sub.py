@@ -51,7 +51,7 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile = str(Path(__file__).parent) + '/predict_substance_model_V3.pkl'
+    mfile = str(Path(__file__).parent) + '/sub_finalized_model.pkl'
     with open(mfile, 'rb') as file:
         model = pickle.load(file)
     return model
