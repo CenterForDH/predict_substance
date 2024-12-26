@@ -51,31 +51,27 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile1 = str(Path(__file__).parent) / 'XGboost_grid_auc.pkl'
-    mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
-    st.markdown(str(mfile2), unsafe_allow_html=True)
-    try:
-        with open(mfile1, 'rb') as file:
+    mfile1 = str(Path(__file__).parent) / 'sub_finalized_model.pkl'
+    #mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
+
+    with open(mfile1, 'rb') as file:
             auc_model = pickle.load(file)
-        with open(mfile2, 'rb') as file:
-            precision_model = pickle.load(file)
-    except pickle.UnpicklingError as e:
-        raise ValueError(f"Error loading pickle file: {e}")
-    except FileNotFoundError as e:
-        raise FileNotFoundError(f"File not found: {e}")
-    return auc_model, precision_model
+    #with open(mfile2, 'rb') as file:
+           # precision_model = pickle.load(file)
+    
+    return auc_model
 
 # predict_substance_model
 # sub_finalized_model_lgb
 
 
 def prediction(X_test):
-    auc_model, precision_model = model_file()
+    auc_model = model_file()
+    result=auc_model.predict_proba(X_test)
+    #y_proba_auc = auc_model.predict_proba(X_test)
+    #y_proba_precision = precision_model.predict_proba(X_test)
 
-    y_proba_auc = auc_model.predict_proba(X_test)
-    y_proba_precision = precision_model.predict_proba(X_test)
-
-    result =  0.4 *y_proba_auc + 0.6 * y_proba_precision
+    #result =  0.4 *y_proba_auc + 0.6 * y_proba_precision
 
     return result[0][1]
 
