@@ -51,18 +51,25 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile = str(Path(__file__).parent) + '/sub_finalized_model.pkl'
-    with open(mfile, 'rb') as file:
-        model = pickle.load(file)
-    return model
+    mfile1 = str(Path(__file__).parent) + '/XGboost_grid_auc.pkl'
+    mfile2 = str(Path(__file__).parent) + '/XGboost_grid_precision.pkl'
+    with open(mfile1, 'rb') as file:
+        auc_model = pickle.load(file)
+    with open(mfile2, 'rb') as file:
+        precision_model = pickle.load(file)
+    return auc_model, precision_model
 
 # predict_substance_model
 # sub_finalized_model_lgb
 
 
 def prediction(X_test):
-    model = model_file()
-    result = model.predict_proba([X_test])
+    auc_model, precision_model = model_file()
+
+    y_proba_auc = auc_model.predict_proba(X_test)
+    y_proba_precision = precision_model.predict_proba(X_test)
+
+    result =  0.4 *y_proba_auc + 0.6 * y_proba_precision
 
     return result[0][1]
 
@@ -81,10 +88,12 @@ def set_bmi(BMI):
 def input_values():
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
-    SEX = SEXDict[SEX]
+    sex = SEXDict[SEX]
 
-    GRADE   = st.radio('Age(year)',(13,14,15,16,17,18), horizontal=True)
-
+    grade   = st.radio('Grade',('7th', '8th', '9th', '10th', '11th', '12th', '13th'), horizontal=True)
+    gradeDict = {'7th': 1, '8th': 2, '9th': 3, '10th': 4, '11th': 5, '12th': 6}
+    grade= gradeDict[grade]
+    
     height  = st.number_input('Height (cm)', min_value=80, max_value=190, value=130)
     weight  = st.number_input('Weight (kg)', min_value=30, max_value=100, value=50)
     bmiv = weight/((height/100)**2)
@@ -98,7 +107,7 @@ def input_values():
     
     household_income  = st.radio('Household income', ('Low','Middle','Upper-middle','High'), horizontal=True)
     household_incomeDict = {'Low':1,'Middle':2,'Upper-middle':3,'High':4}
-    household_income  = household_incomeDict[household_income]
+    economic  = household_incomeDict[household_income]
    
     study    = st.radio('School performance', ('Low', 'Low-middle','Middle','Upper-middle','Upper'), horizontal=True)
     studyDict = {'Low':1, 'Low-middle':2,'Middle':3,'Upper-middle':4,'Upper':5}
@@ -110,7 +119,7 @@ def input_values():
     
     alcoholic_consumption = st.radio('Acohol consumption Status', ('No','Yes'), horizontal=True)
     alcoholic_consumptionDict = {'No':0,'Yes':1}
-    alcoholic_consumption = alcoholic_consumptionDict[alcoholic_consumption]
+    alcohol = alcoholic_consumptionDict[alcoholic_consumption]
     
     stress  = st.radio('Stress status', ('Low','Moderate', 'High','Very much'), horizontal=True)
     stressDict = {'Low':1,'Moderate':2,'High':3,'Very much':4}
@@ -128,7 +137,7 @@ def input_values():
     suicideattemptsDict = {'No':0,'Yes':1}
     suicideattempts = suicideattemptsDict[suicideattempts]
     
-    X_test = [SEX, GRADE, region, bmi_2, household_income, study, stress, alcoholic_consumption, smoking, depression, suicidalthinking, suicideattempts]
+    X_test = [sex, grade, region, bmi_2, study, economic, smoking, alcohol, stress, depression, suicidalthinking, suicideattempts]
 
     result = prediction(X_test)
 
