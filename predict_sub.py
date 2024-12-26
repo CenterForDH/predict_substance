@@ -53,6 +53,7 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 def model_file():
     mfile1 = str(Path(__file__).parent) / 'XGboost_grid_auc.pkl'
     mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
+    print(mfile1)
     try:
         with open(mfile1, 'rb') as file:
             auc_model = pickle.load(file)
