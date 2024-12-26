@@ -51,8 +51,8 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile1 = str(Path(__file__).parent) + '/XGboost_grid_auc.pkl'
-    mfile2 = str(Path(__file__).parent) + '/XGboost_grid_precision.pkl'
+    mfile1 = str(Path(__file__).parent) / 'XGboost_grid_auc.pkl'
+    mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
     with open(mfile1, 'rb') as file:
         auc_model = pickle.load(file)
     with open(mfile2, 'rb') as file:
