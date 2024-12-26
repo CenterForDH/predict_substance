@@ -53,10 +53,15 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 def model_file():
     mfile1 = str(Path(__file__).parent) / 'XGboost_grid_auc.pkl'
     mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
-    with open(mfile1, 'rb') as file:
-        auc_model = pickle.load(file)
-    with open(mfile2, 'rb') as file:
-        precision_model = pickle.load(file)
+    try:
+        with open(mfile1, 'rb') as file:
+            auc_model = pickle.load(file)
+        with open(mfile2, 'rb') as file:
+            precision_model = pickle.load(file)
+    except pickle.UnpicklingError as e:
+        raise ValueError(f"Error loading pickle file: {e}")
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"File not found: {e}")
     return auc_model, precision_model
 
 # predict_substance_model
