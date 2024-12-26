@@ -51,7 +51,7 @@ st.markdown(str(footerText), unsafe_allow_html=True)
 @st.cache_data
 #sub_finalized_model_adb predict_substance_model
 def model_file():
-    mfile1 = str(Path(__file__).parent) / 'sub_finalized_model.pkl'
+    mfile1 = str(Path(__file__).parent) + '/sub_finalized_model.pkl'
     #mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
 
     with open(mfile1, 'rb') as file:
@@ -92,7 +92,7 @@ def input_values():
     SEXDict = {'Male':1,'Female':2}
     sex = SEXDict[SEX]
 
-    grade   = st.radio('Grade',('7th', '8th', '9th', '10th', '11th', '12th', '13th'), horizontal=True)
+    grade   = st.radio('Grade',('7th', '8th', '9th', '10th', '11th', '12th'), horizontal=True)
     gradeDict = {'7th': 1, '8th': 2, '9th': 3, '10th': 4, '11th': 5, '12th': 6}
     grade= gradeDict[grade]
     
