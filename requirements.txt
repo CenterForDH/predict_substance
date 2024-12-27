@@ -4,4 +4,3 @@ pandas
 pillow
 scikit-learn
 xgboost
-pickle
