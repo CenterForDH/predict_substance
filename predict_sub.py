@@ -170,11 +170,7 @@ def input_values():
         X_test = X_test.reshape(1, -1)
         
     scaler = MinMaxScaler()
-    scaler.fit(train)
-    st.text(f"X_test shape: {X_test.shape}")
-    st.text(f"Expected features: {scaler.n_features_in_}")
-    st.text(f"X_test dtype: {X_test.dtype}")
-   
+    scaler.fit(train)   
     X_test_scaled = scaler.transform(X_test)
     
     result = prediction(X_test_scaled)
@@ -192,16 +188,12 @@ def main():
             addiction_level = 'Barely'
         elif result*100 < 75:  # 50% 이상 75% 미만
             addiction_level = 'Moderately'
-            st.markdown(f'# {result*100:.2f} %')
-
         elif result*100 < 90:  # 75% 이상 90% 미만
             addiction_level = 'Considerably'
-            st.markdown(f'# {result*100:.2f} %')
         elif result*100 <= 100 :  # 90% 이상
             addiction_level = 'Extremely'
-            print(result*100, )
-            st.markdown(f'# {result*100:.2f} %')
-        
+            
+        st.markdown(f'# {result*100:.2f} %')
         st.markdown(f'## {addiction_level}')
 
     now = time.localtime()
