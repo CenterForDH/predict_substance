@@ -100,6 +100,8 @@ def set_bmi(BMI):
 
 
 def input_values():
+    train=pd.read_csv(train_x.csv)
+    
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
     sex = SEXDict[SEX]
@@ -152,8 +154,13 @@ def input_values():
     suicideattempts = suicideattemptsDict[suicideattempts]
     
     X_test = [sex, grade, region, bmi_2, study, economic, smoking, alcohol, stress, depression, suicidalthinking, suicideattempts]
-    print(X_test.info())
-    result = prediction(X_test)
+
+    scaler = MinMaxScaler()
+    scaler.fit(train)
+
+    X_test_scaled = scaler.transform(X_test)
+    
+    result = prediction(X_test_scaled)
 
     return result
 
