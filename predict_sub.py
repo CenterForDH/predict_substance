@@ -168,7 +168,10 @@ def input_values():
         
     scaler = MinMaxScaler()
     scaler.fit(train)
-       
+    st.text(f"X_test shape: {X_test.shape}")
+    st.text(f"Expected features: {scaler.n_features_in_}")
+    st.text(f"X_test dtype: {X_test.dtype}")
+   
     X_test_scaled = scaler.transform(X_test)
     
     result = prediction(X_test_scaled)
