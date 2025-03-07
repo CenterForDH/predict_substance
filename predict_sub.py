@@ -2,6 +2,7 @@ import streamlit as st
 import time
 import os
 import pandas as pd
+import numpy as np
 
 from pathlib import Path
 import pickle 
@@ -162,8 +163,8 @@ def input_values():
     suicideattempts = suicideattemptsDict[suicideattempts]
     
     X_test = [sex, grade, region, bmi_2, study, economic, smoking, alcohol, stress, depression, suicidalthinking, suicideattempts]
-    if len(X_test.shape) == 1:
-        X_test = X_test.reshape(1, -1)
+    if isinstance(X_test, list):
+        X_test = np.array(X_test)
         
     scaler = MinMaxScaler()
     scaler.fit(train)
