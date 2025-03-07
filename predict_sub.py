@@ -162,10 +162,12 @@ def input_values():
     suicideattempts = suicideattemptsDict[suicideattempts]
     
     X_test = [sex, grade, region, bmi_2, study, economic, smoking, alcohol, stress, depression, suicidalthinking, suicideattempts]
-
+    if len(X_test.shape) == 1:
+        X_test = X_test.reshape(1, -1)
+        
     scaler = MinMaxScaler()
     scaler.fit(train)
-
+       
     X_test_scaled = scaler.transform(X_test)
     
     result = prediction(X_test_scaled)
