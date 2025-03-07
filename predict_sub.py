@@ -163,8 +163,9 @@ def input_values():
     suicideattempts = suicideattemptsDict[suicideattempts]
     
     X_test = [sex, grade, region, bmi_2, study, economic, smoking, alcohol, stress, depression, suicidalthinking, suicideattempts]
-    if isinstance(X_test, list):
-        X_test = np.array(X_test)
+    if X_test.ndim == 1:
+        X_test = X_test.reshape(1, -1)
+
         
     scaler = MinMaxScaler()
     scaler.fit(train)
