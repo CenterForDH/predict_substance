@@ -152,7 +152,7 @@ def input_values():
     suicideattempts = suicideattemptsDict[suicideattempts]
     
     X_test = [sex, grade, region, bmi_2, study, economic, smoking, alcohol, stress, depression, suicidalthinking, suicideattempts]
-
+    printI(X_test.info())
     result = prediction(X_test)
 
     return result
