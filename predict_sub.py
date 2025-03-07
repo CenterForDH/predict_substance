@@ -50,6 +50,7 @@ text-align: center;
 st.markdown(str(footerText), unsafe_allow_html=True)
 
 @st.cache_data
+@st.cache_resource
 #sub_finalized_model_adb predict_substance_model
 def model_file():
     #mfile1 = str(Path(__file__).parent) / 'XGboost_grid_auc.pkl'
