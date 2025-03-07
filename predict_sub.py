@@ -100,7 +100,7 @@ def set_bmi(BMI):
 
 
 def input_values():
-    train=pd.read_csv(train_x.csv)
+    uploaded_file = st.file_uploader("train_x.csv", type="csv")
     
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
