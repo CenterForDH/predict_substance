@@ -55,22 +55,23 @@ def model_file():
     #mfile1 = str(Path(__file__).parent) / 'XGboost_grid_auc.pkl'
     #mfile2 = str(Path(__file__).parent) / 'XGboost_grid_precision.pkl'
 
-    with open('predict_substance_model_V2.pkl', 'rb') as file1:
+    with open('XGboost_grid_aic.pkl', 'rb') as file1:
             auc_model = pickle.load(file1)
-    #with open('XGboost_grid_precision.pkl', 'rb') as file2:
-            #precision_model = pickle.load(file2)
+    with open('XGboost_grid_precision.pkl', 'rb') as file2:
+            precision_model = pickle.load(file2)
     
-    return auc_model
+    return auc_model,precision_model
 
 # predict_substance_model
 # sub_finalized_model_lgb
 
 
 def prediction(X_test):
-    auc_model = model_file()
+    auc_model, precision_model = model_file()
     #result=auc_model.predict_proba(X_test)
     y_proba_auc = auc_model.predict_proba(X_test)
-    result =  y_proba_auc
+    y_proba_precision = precision_model.predict_proba(X_test)
+    result =  y_proba_auc*0.4 + y_proba_precision*0.6
 
     return result[0][1]
 
