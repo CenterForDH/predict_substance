@@ -173,7 +173,7 @@ def input_values():
     scaler.fit(train)   
     X_test_scaled = scaler.transform(X_test)
     
-    result = prediction(X_test_scaled)
+    result = prediction(X_test)
 
     return result
 
