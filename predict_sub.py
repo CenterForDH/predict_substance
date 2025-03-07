@@ -194,7 +194,6 @@ def main():
             addiction_level = 'Extremely'
             
         st.markdown(f'# {result*100:.2f} %')
-        st.markdown(f'## {addiction_level}')
 
     now = time.localtime()
     print(time.strftime('%Y-%m-%d %H:%M:%S', now))
