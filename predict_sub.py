@@ -100,7 +100,13 @@ def set_bmi(BMI):
 
 
 def input_values():
-    uploaded_file = st.file_uploader("train_x.csv", type="csv")
+    file_path="train_x.csv"
+    if os.path.exists(file_path):
+        train = pd.read_csv(file_path)
+        print("로컬 파일 로드 성공!")
+    else:
+        print(f"파일이 없습니다: {file_path}")
+
     
     SEX     = st.radio('Sex',('Male','Female'), horizontal=True)
     SEXDict = {'Male':1,'Female':2}
